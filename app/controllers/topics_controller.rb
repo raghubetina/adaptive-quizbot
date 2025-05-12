@@ -23,6 +23,16 @@ class TopicsController < ApplicationController
 
     if the_topic.valid?
       the_topic.save
+
+      system_message = Message.new
+      system_message.role = "system"
+      system_message.topic_id = the_topic.id
+      system_message.content = "You are a #{the_topic.title} tutor. Ask the user five questions to assess their Basketball proficiency. Start with an easy question. After each answer, increase or decrease the difficulty of the next question based on how well the user answered.
+
+In the end, provide a score between 0 and 10."
+
+      system_message.save
+
       redirect_to("/topics/#{the_topic.id}", { :notice => "Topic created successfully." })
     else
       redirect_to("/topics", { :alert => the_topic.errors.full_messages.to_sentence })
