@@ -27,6 +27,36 @@ class MessagesController < ApplicationController
     if the_message.valid?
       the_message.save
 
+      # Get all the older messages for this topic from the db
+
+      # the_topic = Topic.where({ :id => the_message.topic_id }).at(0)
+      
+      the_topic = the_message.topic
+
+      the_history = the_topic.messages.order(:created_at)
+
+      # Reconstruct an AI::Chat from scratch
+
+      chat = OpenAI::Chat.new
+
+      the_history.each do |a_message|
+        if a_message.role == "system"
+          chat.system(a_message.content)
+        elsif a_message.role == "user"
+          chat.user(a_message.content)
+        else
+          chat.assistant(a_message.content)
+        end
+      end
+
+      # Get the next assistant message
+
+      next_message = Message.new
+      next_message.topic_id = the_topic.id
+      next_message.role = "assistant"
+      next_message.content = chat.assistant!
+      next_message.save
+
       redirect_to("/topics/#{the_message.topic_id}", { :notice => "Message created successfully." })
     else
       redirect_to("/topics/#{the_message.topic_id}", { :alert => the_message.errors.full_messages.to_sentence })

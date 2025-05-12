@@ -26,7 +26,7 @@
 <hr>
 
 <dl>
-<% @the_topic.messages.each do |a_message| %>
+<% @the_topic.messages.order(:created_at).each do |a_message| %>
   <dt>
     <%= a_message.role %>
   </dt>
