@@ -29,7 +29,7 @@ class MessagesController < ApplicationController
 
       redirect_to("/topics/#{the_message.topic_id}", { :notice => "Message created successfully." })
     else
-      redirect_to("/messages", { :alert => the_message.errors.full_messages.to_sentence })
+      redirect_to("/topics/#{the_message.topic_id}", { :alert => the_message.errors.full_messages.to_sentence })
     end
   end
 
