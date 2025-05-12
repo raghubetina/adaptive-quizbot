@@ -23,7 +23,7 @@ class TopicsController < ApplicationController
 
     if the_topic.valid?
       the_topic.save
-      redirect_to("/topics", { :notice => "Topic created successfully." })
+      redirect_to("/topics/#{the_topic.id}", { :notice => "Topic created successfully." })
     else
       redirect_to("/topics", { :alert => the_topic.errors.full_messages.to_sentence })
     end
