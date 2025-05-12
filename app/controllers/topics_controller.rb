@@ -40,6 +40,17 @@ In the end, provide a score between 0 and 10."
       user_message.content = "Can you assess my #{the_topic.title} proficiency?"
       user_message.save
 
+      c = OpenAI::Chat.new
+      c.system(system_message.content)
+      c.user(user_message.content)
+      next_ai_message_content = c.assistant!
+
+      next_message = Message.new
+      next_message.role = "assistant"
+      next_message.content = next_ai_message_content
+      next_message.topic_id = the_topic.id
+      next_message.save
+
       redirect_to("/topics/#{the_topic.id}", { :notice => "Topic created successfully." })
     else
       redirect_to("/topics", { :alert => the_topic.errors.full_messages.to_sentence })
