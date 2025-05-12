@@ -10,4 +10,8 @@
 #  topic_id   :integer
 #
 class Message < ApplicationRecord
+  belongs_to :topic
+
+  validates :role, presence: true
+  validates :content, presence: true
 end
