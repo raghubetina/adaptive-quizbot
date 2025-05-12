@@ -33,6 +33,13 @@ In the end, provide a score between 0 and 10."
 
       system_message.save
 
+
+      user_message = Message.new
+      user_message.topic_id = the_topic.id
+      user_message.role = "user"
+      user_message.content = "Can you assess my #{the_topic.title} proficiency?"
+      user_message.save
+
       redirect_to("/topics/#{the_topic.id}", { :notice => "Topic created successfully." })
     else
       redirect_to("/topics", { :alert => the_topic.errors.full_messages.to_sentence })
