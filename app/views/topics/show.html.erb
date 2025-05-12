@@ -25,6 +25,18 @@
 
 <hr>
 
+<dl>
+<% @the_topic.messages.each do |a_message| %>
+  <dt>
+    <%= a_message.role %>
+  </dt>
+
+  <dd>
+    <%= a_message.content %>
+  </dd>
+<% end %>
+</dl>
+
 <hr>
 
 <form action="/insert_message" method="post">
