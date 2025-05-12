@@ -21,11 +21,12 @@ class MessagesController < ApplicationController
     the_message = Message.new
     the_message.topic_id = params.fetch("query_topic_id")
     the_message.content = params.fetch("query_content")
-    the_message.role = params.fetch("query_role")
+    the_message.role = "user"
 
     if the_message.valid?
       the_message.save
-      redirect_to("/messages", { :notice => "Message created successfully." })
+      
+      redirect_to("/topics/#{the_message.topic_id}", { :notice => "Message created successfully." })
     else
       redirect_to("/messages", { :alert => the_message.errors.full_messages.to_sentence })
     end

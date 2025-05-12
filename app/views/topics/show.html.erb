@@ -1,7 +1,7 @@
 <div>
   <div>
     <h1>
-      Topic #<%= @the_topic.id %> details
+      <%= @the_topic.title %> quiz
     </h1>
 
     <div>
@@ -10,34 +10,14 @@
           Go back
         </a>
       </div>
-
-      <div>
-        <a href="/delete_topic/<%= @the_topic.id %>">
-          Delete topic
-        </a>
-      </div>
     </div>
 
     <dl>
-      <dt>
-        Title
-      </dt>
-      <dd>
-        <%= @the_topic.title %>
-      </dd>
-
       <dt>
         Created at
       </dt>
       <dd>
         <%= time_ago_in_words(@the_topic.created_at) %> ago
-      </dd>
-
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_topic.updated_at) %> ago
       </dd>
     </dl>
   </div>
@@ -45,27 +25,12 @@
 
 <hr>
 
-
-<div>
-  <div>
-    <h2>
-      Edit topic
-    </h2>
-
-    <form action="/modify_topic/<%= @the_topic.id %>"  method="post" >
-      <div>
-        <label for="title_box">
-          Title
-        </label>
-
-        <input type="text" id="title_box" name="query_title" value="<%= @the_topic.title %>">
-      </div>
-
-      <button>
-        Update topic
-      </button>
-    </form>
-  </div>
-</div>
-
 <hr>
+
+<form action="/insert_message" method="post">
+  <input name="query_topic_id" type="hidden" name="quiz_id" value="<%= @the_topic.id %>">
+
+  <textarea name="query_content" placeholder="Enter your answer..."></textarea>
+
+  <button>Submit answer</button>
+</form>
